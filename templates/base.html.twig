@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}My Boutique{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/pulse/bootstrap.min.css" integrity="sha512-uVYwYyXOAvo+4R3AGZfqzzGksUsdsegIgjYa5rsUrN+lDZq+PX3U8ofMm5zRl1gRMz0br7miqUOELmg7/dpuAA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">My Boutique</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ path('home') }}">Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Produits</a>
+        </li>
+      </ul> 
+        {% if app.user %}
+          <a class="btn btn-primary" href="{{ path('admin') }}">BackOffice</a>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mon compte</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Profil</a>
+             <a href="{{ path('app_logout') }}" class="dropdown-item btn btn-danger">Déconnexion</a>
+          </div>
+        </li>
+      <li class="nav-item">
+          <a class="nav-link btn btn-light position-relative" href="{{ path('app_cart')}}">Panier 
+          {% if app.session.get('qt') > 0 %}
+            
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{app.session.get('qt')}}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+          {% endif %}
+        </a>
+      </li>
+      </ul>
+            {% else %}
+            <a href="{{ path('app_register') }}" class="btn btn-success me-2">Inscription</a>
+            <a href="{{ path('app_login') }}" class="btn btn-light">Connexion</a>
+        {% endif %}
+    </div>
+  </div>
+</nav>
+        {% block body %}{% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    </body>
+</html>

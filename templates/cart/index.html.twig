@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1 class="text-center mt-4">Mon panier</h1>
+    {% if items %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{item.produit.titre}}</td>
+                        <td>{{item.produit.prix / 100}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{(item.produit.prix)/ 100 * item.quantite}}€</td>
+                        {# <td><a href="{{ path('cart_remove', {id: item.product.id}) }}" class="bnt-sm btn-danger">x</a></td> #}
+                        <td>
+                            <a href="{{ path('cart_remove', {id:item.produit.id}) }}" class="btn-sm btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12Z"/></svg>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5 class="text-end">Total : {{ total }}€</h5>
+        <a href="" class="btn btn-primary mb-3">Valider panier</a>
+    {% else %}
+        <p>Votre panier est vide</p>
+    {% endif %}
+</div>
+{% endblock %}
